@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_stage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/holo_blue_dark"
+    android:padding="0dp"
+    app:cardElevation="0dp">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tbl_stage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:id="@+id/row_stage"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgstage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TableRow
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/lbl_name"
+                    android:layout_width="249dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/title"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/lbl_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:layout_below="@id/lbl_name" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/lbl_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/year" />
+            </TableRow>
+        </TableRow>
+    </TableLayout>
+</android.support.v7.widget.CardView>

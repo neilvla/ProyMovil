@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6a9e10</color>
+    <color name="colorPrimaryDark">#457306</color>
+    <color name="colorAccent">#227aff</color>
+    <color name="colorBackground">#000000</color>
+    <color name="year">#999999</color>
+    <color name="title">#ffffff</color>
+    <color name="bg_bubble_self">#62caa6</color>
+    <color name="bg_bubble_watbot">#ecf0f1</color>
+</resources>
