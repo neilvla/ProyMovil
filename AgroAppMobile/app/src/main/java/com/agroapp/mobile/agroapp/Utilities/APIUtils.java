@@ -7,10 +7,8 @@ public class APIUtils {
     private APIUtils(){
     };
 
-    public static final String API_URL = "http://neilvla-001-site1.itempurl.com/AgroAppWS/api/";
-
     public static UserService getUserService(){
-        return RetrofitClient.getClient(API_URL).create(UserService.class);
+        return RetrofitClient.getClient(UrlConnection.URL_BASE).create(UserService.class);
     }
 
 }
