@@ -1,12 +1,32 @@
 package com.agroapp.mobile.agroapp.Entities;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Base {
+    @SerializedName("id")
+    @Expose
     private int id;
+
+    @SerializedName("status")
+    @Expose
     private short status;
+
+    @SerializedName("createdBy")
+    @Expose
     private int createdBy;
+
+    @SerializedName("createdDate")
+    @Expose
     private String createdDate;
+
+    @SerializedName("updatedBy")
+    @Expose
     private int updatedBy;
+
+    @SerializedName("updatedDate")
+    @Expose
     private String updatedDate;
 
     public int getId() {

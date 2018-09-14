@@ -1,46 +1,38 @@
 package com.agroapp.mobile.agroapp.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.agroapp.mobile.agroapp.ControlRegisterActivity;
+import com.agroapp.mobile.agroapp.Data.UserService;
+import com.agroapp.mobile.agroapp.Entities.Result;
 import com.agroapp.mobile.agroapp.Entities.User;
-import com.agroapp.mobile.agroapp.Entities.UserResult;
 import com.agroapp.mobile.agroapp.HomeActivity;
 import com.agroapp.mobile.agroapp.R;
-import com.agroapp.mobile.agroapp.Utilities.AppController;
-import com.agroapp.mobile.agroapp.Utilities.UrlConnection;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.agroapp.mobile.agroapp.Utilities.APIUtils;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
     private Gson gson;
-
+    private UserService userService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        userService = APIUtils.getUserService();
         validateUser(view);
 
         return view;
@@ -55,11 +47,61 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 validate(user.getText().toString(), pass.getText().toString());
+                //getId(5);
             }
         });
     }
 
     private void validate(String usu, String pass) {
+        User usuario = new User();
+        usuario.setEmail(usu);
+        usuario.setPassword(pass);
+        Call<Result<User>> call = userService.validate(usuario);
+        call.enqueue(new Callback<Result<User>>() {
+            @Override
+            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
+                if(response.isSuccessful()){
+                    User u = response.body().getResult();
+                    getStatusCropControl(u);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<User>> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    private void getStatusCropControl(User u){
+        Call<Result<Short>> call = userService.get_StatusCropControl(u.getId());
+        final User user = u;
+        call.enqueue(new Callback<Result<Short>>() {
+            @Override
+            public void onResponse(Call<Result<Short>> call, Response<Result<Short>> response) {
+                if(response.isSuccessful()){
+                    Intent intent;
+                    if (response.body().getResult() != 0){
+                        intent = new Intent(getActivity(), HomeActivity.class);
+                    }else{
+                        intent = new Intent(getActivity(), HomeActivity.class);
+                        intent.putExtra("User", user);
+                    }
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<Short>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
+
+    /*private void validate(String usu, String pass) {
         Map<String, String> params = new HashMap<>();
         params.put("Email", usu);
         params.put("Password", pass);
@@ -79,9 +121,9 @@ public class LoginFragment extends Fragment {
                         UserResult userResponse = gson.fromJson(rpt, UserResult.class);
                         if (userResponse.getTypeResult() == 0) {
                             if (userResponse.getResult() != null) {
-                                /*Intent intent = new Intent(getActivity(), HomeActivity.class);
+                                Intent intent = new Intent(getActivity(), HomeActivity.class);
                                 intent.putExtra("User", userResponse.getResult());
-                                startActivity(intent);*/
+                                startActivity(intent);
                                 getStatusCropControl(userResponse.getResult());
                             }else{
                                 Toast.makeText(getActivity(), "Usuario no se encuentra registrado", Toast.LENGTH_LONG).show();
@@ -141,5 +183,5 @@ public class LoginFragment extends Fragment {
             }
         });
         AppController.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
-    }
+    }*/
 }

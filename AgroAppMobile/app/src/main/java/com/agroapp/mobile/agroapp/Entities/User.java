@@ -1,12 +1,30 @@
 package com.agroapp.mobile.agroapp.Entities;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class User extends Base implements Serializable {
+
+    @SerializedName("name")
+    @Expose
     private String name;
+
+    @SerializedName("lastName")
+    @Expose
     private String lastName;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("password")
+    @Expose
     private String password;
+
+    @SerializedName("image")
+    @Expose
     private String image;
 
     public String getName() {
